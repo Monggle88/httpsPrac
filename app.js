@@ -1,4 +1,3 @@
-require('dotenv').config;
 const fs = require('fs');
 const HTTPS = require('https');
 const express = require('express');
@@ -11,22 +10,17 @@ app.get('/hello', (req, res) => {
 });
 
 // 운영 환경일때만 적용
-if (process.env.NODE_ENV == 'production') {
-    try {
-        const option = {
-            ca: fs.readFileSync('/etc/letsencrypt/live/great-effect.com/fullchain.pem'),
-            key: fs.readFileSync('/etc/letsencrypt/live/great-effect.com/privkey.pem'),
-            cert: fs.readFileSync('/etc/letsencrypt/live/great-effect.com/cert.pem'),
-        };
+try {
+    const option = {
+        ca: fs.readFileSync('/etc/letsencrypt/live/great-effect.com/fullchain.pem'),
+        key: fs.readFileSync('/etc/letsencrypt/live/great-effect.com/privkey.pem'),
+        cert: fs.readFileSync('/etc/letsencrypt/live/great-effect.com/cert.pem'),
+    };
 
-        HTTPS.createServer(option, app).listen(port, () => {
-            console.log('HTTPS 서버가 실행되었습니다. 포트 :: ' + port);
-        });
-    } catch (error) {
-        console.log('HTTPS 서버가 실행되지 않습니다.');
-        console.log(error);
-    }
-} else {
+    HTTPS.createServer(option, app).listen(port, () => {
+        console.log('HTTPS 서버가 실행되었습니다. 포트 :: ' + port);
+    });
+} catch (error) {
     app.listen(port, () => {
         console.log('HTTP 서버가 실행되었습니다. 포트 :: ' + port);
     });
