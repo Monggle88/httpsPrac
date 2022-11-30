@@ -14,9 +14,9 @@ app.get('/hello', (req, res) => {
 if (process.env.NODE_ENV == 'production') {
     try {
         const option = {
-            ca: fs.readFileSync('/etc/letsencrypt/live/{myurl}/fullchain.pem'),
-            key: fs.readFileSync('/etc/letsencrypt/live/{myurl}/privkey.pem'),
-            cert: fs.readFileSync('/etc/letsencrypt/live/{myurl}/cert.pem'),
+            ca: fs.readFileSync('/etc/letsencrypt/live/great-effect.com/fullchain.pem'),
+            key: fs.readFileSync('/etc/letsencrypt/live/great-effect.com/privkey.pem'),
+            cert: fs.readFileSync('/etc/letsencrypt/live/great-effect.com/cert.pem'),
         };
 
         HTTPS.createServer(option, app).listen(port, () => {
